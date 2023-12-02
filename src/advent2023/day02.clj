@@ -7,16 +7,11 @@
 
 (defn get-maxes [cts]
   (reduce (fn [maxes ct]
-            (println ct)
-            {:red (if (contains? ct :red)
-                    (max (:red ct) (:red maxes))
-                    (:red maxes))
-             :green (if (contains? ct :green)
-                      (max (:green ct) (:green maxes))
-                      (:green maxes))
-             :blue (if (contains? ct :blue)
-                     (max (:blue ct) (:blue maxes))
-                     (:blue maxes))}) {:red 0, :green 0, :blue 0}
+            (merge maxes
+                   (into {}
+                         (for [k (keys ct) :when (contains? ct k)]
+                           [k (max (get ct k) (get maxes k 0))]))))
+          {:red 0, :green 0, :blue 0}
           cts))
 
 (defn counts-from-set [st]
@@ -58,7 +53,6 @@
   (let [data-file (slurp (io/resource "day02.txt"))
         lines (split-lines data-file)]
     (apply + (mapv powers lines))))
-
 
 (comment
 
