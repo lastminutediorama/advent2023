@@ -1,6 +1,6 @@
 (ns advent2023.day01
   (:require [clojure.java.io :as io]
-            [clojure.string :as str :refer [split-lines index-of]])
+            [clojure.string :as str :refer [split-lines]])
   (:gen-class))
 
 (defn extract-nums [s]
